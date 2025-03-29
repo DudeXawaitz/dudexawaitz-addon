@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1920 1080">
+  <defs>
+    <filter id="noise" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+      <feBlend mode="overlay" in2="SourceGraphic" result="noise" />
+    </filter>
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+      <feComponentTransfer in="blur" result="glow">
+        <feFuncA type="linear" slope="1.5" intercept="0" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <radialGradient id="backgroundGradient" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#222222" />
+      <stop offset="100%" stop-color="#000000" />
+    </radialGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#backgroundGradient)" />
+  
+  <!-- Noise overlay -->
+  <rect width="100%" height="100%" filter="url(#noise)" opacity="0.3" />
+  
+  <!-- Film grain texture -->
+  <rect width="100%" height="100%" fill="url(#accentGradient)" opacity="0.05" />
+  
+  <!-- Geometric patterns -->
+  <g opacity="0.2" filter="url(#glow)">
+    <!-- Main star -->
+    <polygon points="960,200 1010,350 1170,350 1040,450 1090,600 960,510 830,600 880,450 750,350 910,350" 
+             fill="none" stroke="#ffffff" stroke-width="2" />
+    
+    <!-- Geometric circles -->
+    <circle cx="960" cy="540" r="400" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.3" />
+    <circle cx="960" cy="540" r="300" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.4" />
+    <circle cx="960" cy="540" r="200" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.5" />
+    
+    <!-- Random stars -->
+    <g opacity="0.6">
+      <polygon points="200,200 215,240 260,240 225,265 240,310 200,285 160,310 175,265 140,240 185,240" fill="none" stroke="#ffffff" stroke-width="1" />
+      <polygon points="1700,300 1715,340 1760,340 1725,365 1740,410 1700,385 1660,410 1675,365 1640,340 1685,340" fill="none" stroke="#ffffff" stroke-width="1" />
+      <polygon points="300,800 315,840 360,840 325,865 340,910 300,885 260,910 275,865 240,840 285,840" fill="none" stroke="#ffffff" stroke-width="1" />
+      <polygon points="1600,700 1615,740 1660,740 1625,765 1640,810 1600,785 1560,810 1575,765 1540,740 1585,740" fill="none" stroke="#ffffff" stroke-width="1" />
+    </g>
+    
+    <!-- Connecting lines -->
+    <line x1="200" y1="200" x2="960" y2="200" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.2" />
+    <line x1="1700" y1="300" x2="1170" y2="350" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.2" />
+    <line x1="300" y1="800" x2="830" y2="600" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.2" />
+    <line x1="1600" y1="700" x2="1090" y2="600" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.2" />
+  </g>
+  
+  <!-- Mystical geometry patterns -->
+  <g opacity="0.15">
+    <circle cx="960" cy="540" r="450" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="10,10" />
+    <path d="M510,540 Q960,100 1410,540" fill="none" stroke="#ffffff" stroke-width="0.5" />
+    <path d="M510,540 Q960,980 1410,540" fill="none" stroke="#ffffff" stroke-width="0.5" />
+    <path d="M960,90 Q510,540 960,990" fill="none" stroke="#ffffff" stroke-width="0.5" />
+    <path d="M960,90 Q1410,540 960,990" fill="none" stroke="#ffffff" stroke-width="0.5" />
+  </g>
+</svg>
