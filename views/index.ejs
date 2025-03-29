@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DudeXawaitz</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/modal.css">
+    <link rel="stylesheet" href="/static/css/filters.css">
+    <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="hero-section">
+        <div class="logo-container">
+            <img src="/static/logo.svg" alt="DudeXawaitz Logo" class="logo">
+            <h1 class="tagline">Premium Movies & Series</h1>
+        </div>
+        <div class="cta-container">
+            <button id="installButton" class="install-button">Install Addon</button>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <h2 class="section-title">Experience Premium Entertainment</h2>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Malayalam Films</h3>
+                <p>Extensive collection of Malayalam cinema in premium quality</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌟</div>
+                <h3>English Content</h3>
+                <p>Latest Hollywood movies and top-rated TV series</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3>Premium Player</h3>
+                <p>VLC/MX Player-inspired luxury viewing experience</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Advanced Filters</h3>
+                <p>Filter by quality, language, and subtitles</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="catalog-section">
+        <h2 class="section-title">Featured Content</h2>
+        <div class="catalog-filters">
+            <button class="filter-button active" data-filter="all">All</button>
+            <button class="filter-button" data-filter="malayalam">Malayalam</button>
+            <button class="filter-button" data-filter="english">English</button>
+            <button class="filter-button" data-filter="movies">Movies</button>
+            <button class="filter-button" data-filter="series">Series</button>
+        </div>
+        <div class="catalog-grid">
+            <!-- Content will be populated here -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="/static/logo.svg" alt="DudeXawaitz Logo" class="footer-logo-img">
+        </div>
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; <%= new Date().getFullYear() %> DudeXawaitz. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/filters.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the addon URL from the backend
+            const addonUrl = "<%= addonUrl %>";
+            
+            // Set up the install button
+            const installButton = document.getElementById('installButton');
+            installButton.addEventListener('click', function() {
+                showInstallModal(addonUrl);
+            });
+            
+            // Initialize animations and effects
+            animateOnScroll();
+            setupParallaxEffect();
+            initializeInstallModal();
+            
+            // Simulate catalog content (this would come from your actual API in production)
+            const catalogGrid = document.querySelector('.catalog-grid');
+            
+            // Sample data - in a real implementation, you would fetch this from your backend
+            const sampleContent = [
+                { id: 1, title: "Malayalam Action Drama", type: "movie", category: "malayalam", posterUrl: "https://picsum.photos/300/450?random=1" },
+                { id: 2, title: "English Sci-Fi Adventure", type: "movie", category: "english", posterUrl: "https://picsum.photos/300/450?random=2" },
+                { id: 3, title: "Malayalam Comedy Series", type: "series", category: "malayalam", posterUrl: "https://picsum.photos/300/450?random=3" },
+                { id: 4, title: "English Drama Series", type: "series", category: "english", posterUrl: "https://picsum.photos/300/450?random=4" },
+                { id: 5, title: "Malayalam Thriller", type: "movie", category: "malayalam", posterUrl: "https://picsum.photos/300/450?random=5" },
+                { id: 6, title: "English Action Movie", type: "movie", category: "english", posterUrl: "https://picsum.photos/300/450?random=6" },
+                { id: 7, title: "Malayalam Family Drama", type: "movie", category: "malayalam", posterUrl: "https://picsum.photos/300/450?random=7" },
+                { id: 8, title: "English Comedy Series", type: "series", category: "english", posterUrl: "https://picsum.photos/300/450?random=8" }
+            ];
+            
+            // Populate the catalog grid
+            sampleContent.forEach(item => {
+                const contentCard = document.createElement('div');
+                contentCard.className = `content-card ${item.category} ${item.type}`;
+                contentCard.innerHTML = `
+                    <div class="content-poster">
+                        <img src="${item.posterUrl}" alt="${item.title}">
+                        <div class="content-overlay">
+                            <div class="content-title">${item.title}</div>
+                            <div class="content-type">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</div>
+                        </div>
+                    </div>
+                `;
+                catalogGrid.appendChild(contentCard);
+            });
+            
+            // Set up filtering
+            const filterButtons = document.querySelectorAll('.filter-button');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter content cards
+                    const contentCards = document.querySelectorAll('.content-card');
+                    contentCards.forEach(card => {
+                        if (filter === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            if (card.classList.contains(filter)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
